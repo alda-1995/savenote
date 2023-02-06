@@ -7,7 +7,7 @@
         </router-link>
         <div class="flex">
           <link-main :url="{ name: 'login' }" background="bg-main" message="Login" class="mr-4"></link-main>
-          <link-main :url="{ name: 'login' }" background="bg-secondary" message="Registro"></link-main>
+          <link-main :url="{ name: 'registro' }" background="bg-secondary" message="Registro"></link-main>
         </div>
       </div>
     </div>

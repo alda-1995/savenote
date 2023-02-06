@@ -23,7 +23,8 @@ module.exports = {
       },
       colors: {
         main: "#2faeb4",
-        secondary: "#0081B4"
+        secondary: "#0081B4",
+        tertiary: "#343434"
       }
     },
   },
@@ -34,7 +35,7 @@ module.exports = {
     plugin(function ({ addBase }) {
       addBase({
         'h1, .h1': {
-          fontSize: "calc(38px + (110 - 38) * ((100vw - 300px) / (2300 - 300)))",
+          fontSize: "calc(38px + (72 - 38) * ((100vw - 300px) / (2300 - 300)))",
           lineHeight: 1
         },
         'h2, .h2': {
