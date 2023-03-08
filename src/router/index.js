@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { auth } from "@/firebase";
 
 const routes = [
   {
@@ -16,6 +17,14 @@ const routes = [
     path: '/registro',
     name: 'registro',
     component: () => import('../views/RegistroView.vue')
+  },
+  {
+    path: '/perfil',
+    name: 'Perfil',
+    component: () => import('../views/PerfilView.vue'),
+    meta: {
+      requiresAuth: true
+    }
   }
 ]
 
@@ -25,3 +34,18 @@ const router = createRouter({
 })
 
 export default router
+
+
+router.beforeEach((to, from, next) => {
+  const user = auth.currentUser;
+  console.log(user);
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (user) {
+      next();
+    } else {
+      next('/login')
+    }
+  } else {
+    next() // make sure to always call next()!
+  }
+})

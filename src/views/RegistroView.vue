@@ -33,6 +33,7 @@
                                 </div>
                             </div>
                             <btn-main typeBtn="submit" message="Entrar"></btn-main>
+                            <p class="text-redme mt-4" v-if="this.errorGeneral">{{ errorGeneral }}</p>
                         </div>
                     </form>
                 </div>
@@ -46,24 +47,32 @@ import { mapActions } from "vuex";
 import { required, email, helpers, minLength, sameAs } from '@vuelidate/validators'
 import InputMain from '@/components/ui-components/input-main.vue'
 import BtnMain from '@/components/ui-components/btn-main.vue'
+import { auth } from "@/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default {
     name: 'RegistroView',
     setup: () => ({ v$: useVuelidate() }),
-    data: () => ({ correo: 'alda@gmail.com', password: 'aldair123', confirmPassword: 'aldair123' }),
+    data: () => ({ correo: 'alda@gmail.com', password: 'aldair123', confirmPassword: 'aldair123', errorGeneral: '' }),
     components: {
         InputMain,
         BtnMain
     },
     methods: {
-        ...mapActions(["registroUsuarioCorreo"]),
+        ...mapActions(["setUsuario"]),
         async ingresarUsuario() {
             const result = await this.v$.$validate()
             if (!result) {
                 return
             }
-            const res = this.registroUsuarioCorreo({ correo: this.correo, password: this.password })
-            console.log(res);
+            this.errorGeneral = "";
+            try {
+                const resultRegister = await createUserWithEmailAndPassword(auth, this.correo, this.password);
+                this.setUsuario(resultRegister.user);
+                this.$router.push('perfil');
+            } catch (error) {
+                this.errorGeneral = error;
+            }
         }
     },
     validations() {
