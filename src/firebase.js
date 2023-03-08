@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import 'firebase/firestore';
-import 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBKTB3diorv87X54cWDOo7cqGSdVfGWp8o",
@@ -20,4 +20,4 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 const marcaTiempo = firebase.firestore.FieldValue.serverTimestamp;
 
-export { firebase, db, auth, marcaTiempo }
+export { firebase, db, auth, marcaTiempo, getAuth, createUserWithEmailAndPassword }

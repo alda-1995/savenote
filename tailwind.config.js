@@ -24,7 +24,8 @@ module.exports = {
       colors: {
         main: "#2faeb4",
         secondary: "#0081B4",
-        tertiary: "#343434"
+        tertiary: "#343434",
+        redme: "#f20000"
       }
     },
   },
