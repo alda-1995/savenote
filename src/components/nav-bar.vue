@@ -9,7 +9,7 @@
           <link-main :url="{ name: 'login' }" background="bg-main" message="Login" class="mr-4"></link-main>
           <link-main :url="{ name: 'registro' }" background="bg-secondary" message="Registro"></link-main>
         </div>
-        <div class="rounded-full h-12 w-12 bg-secondary flex justify-center items-center hover:bg-main transition-all">
+        <div v-if="usuarioAutenticado" class="rounded-full h-12 w-12 bg-secondary cursor-pointer flex justify-center items-center hover:bg-main transition-all" @click="openMenu();">
           <Bars2Icon class="h-6 w-6 text-white"/>
         </div>
       </div>
@@ -20,7 +20,8 @@
 <script>
 import { Bars2Icon } from '@heroicons/vue/24/solid'
 import LinkMain from '@/components/ui-components/link-main.vue'
-import { mapGetters } from "vuex";
+import { mapGetters } from "vuex"
+import { gsap } from 'gsap'
 export default {
   name: "NavBar",
   components: {
@@ -28,6 +29,9 @@ export default {
     Bars2Icon
   },
   methods: {
+    openMenu(){
+      gsap.to('.sidebar', { x: "0%", duration:0.5,  ease: "expo.out" });
+    }
   },
   computed: {
     ...mapGetters(["usuarioAutenticado"])

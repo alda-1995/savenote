@@ -23,6 +23,9 @@ export default createStore({
       };
       commit('setUsuario', usuario);
     },
+    cerrarSesion({ commit }) {
+      commit('setUsuario', null);
+    },
   },
   modules: {
   }

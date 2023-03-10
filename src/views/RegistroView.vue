@@ -53,7 +53,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 export default {
     name: 'RegistroView',
     setup: () => ({ v$: useVuelidate() }),
-    data: () => ({ correo: 'alda@gmail.com', password: 'aldair123', confirmPassword: 'aldair123', errorGeneral: '' }),
+    data: () => ({ correo: '', password: '', confirmPassword: '', errorGeneral: '' }),
     components: {
         InputMain,
         BtnMain
@@ -62,9 +62,8 @@ export default {
         ...mapActions(["setUsuario"]),
         async ingresarUsuario() {
             const result = await this.v$.$validate()
-            if (!result) {
+            if (!result)
                 return
-            }
             this.errorGeneral = "";
             try {
                 const resultRegister = await createUserWithEmailAndPassword(auth, this.correo, this.password);
