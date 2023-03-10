@@ -5,9 +5,13 @@ import store from './store'
 import './index.css'
 import { auth } from "@/firebase";
 
+
+let app;
 auth.onAuthStateChanged(function (user) {
     if (user) {
         store.dispatch('setUsuario', user);
     }
-    createApp(App).use(store).use(router).mount('#app')
+    if (!app) {
+        app = createApp(App).use(store).use(router).mount('#app')
+    }
 });

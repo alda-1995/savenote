@@ -35,7 +35,6 @@ const router = createRouter({
 
 export default router
 
-
 router.beforeEach((to, from, next) => {
   const user = auth.currentUser;
   console.log(user);
