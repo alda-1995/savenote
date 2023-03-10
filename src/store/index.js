@@ -6,12 +6,12 @@ export default createStore({
   },
   getters: {
     usuarioAutenticado(state) {
-      return !!state.usuario
+      return !!state.usuario;
     }
   },
   mutations: {
     setUsuario(state, payload) {
-      state.usuario = payload
+      state.usuario = payload;
     },
   },
   actions: {
@@ -20,8 +20,8 @@ export default createStore({
         email: user.email,
         uid: user.uid,
         foto: user.photoURL
-      }
-      commit('setUsuario', usuario)
+      };
+      commit('setUsuario', usuario);
     },
   },
   modules: {
