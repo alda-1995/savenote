@@ -29,6 +29,14 @@ const routes = [
   {
     path: '/notas',
     name: 'Notas',
+    component: () => import('../views/NotasView.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/nota',
+    name: 'Nota',
     component: () => import('../views/NotaView.vue'),
     meta: {
       requiresAuth: true

@@ -1,32 +1,48 @@
 <template>
     <div class="container">
-        <h1 class="text-secondary mb-16">Mis Notas</h1>
         <div class="max-w-[500px]">
-            <div class="flex justify-center mb-4">
-                <btn-action background="btn-add" type-icon="add" v-on:my-accion="agregaNota"></btn-action>
+            <div class="flex flex-col">
+                <h2 class="text-secondary mb-8">{{ nameView }}</h2>
+                <form @submit.prevent="guardarNota()" novalidate>
+                    <div class="flex flex-col" :class="{ error: v$.titulo.$errors.length }">
+                        <label for="titulo" class="mb-2 text-main p">Título</label>
+                        <input-main name="titulo" typeInput="email" v-model="titulo"
+                            placename="Escribe un título"></input-main>
+                        <div class="input-errors" v-for="error of v$.titulo.$errors" :key="error.$uid">
+                            <div class="text-redme p-small mb-2">{{ error.$message }}</div>
+                        </div>
+                        <btn-main typeBtn="submit" message="Guardar"></btn-main>
+                        <p class="text-redme mt-4" v-if="this.errorGeneral">{{ errorGeneral }}</p>
+                    </div>
+                </form>
             </div>
-            <empty-notas v-if="listNotas.length > 0"></empty-notas>
-            <lista-notas></lista-notas>
         </div>
     </div>
 </template>
 <script>
-
-import EmptyNotas from '@/components/informativos/empty-notas.vue';
-import ListaNotas from '@/components/informativos/lista-notas.vue';
-import BtnAction from '@/components/ui-components/btn-action.vue';
+import { useVuelidate } from '@vuelidate/core';
+import { required, helpers } from '@vuelidate/validators';
+import InputMain from '@/components/ui-components/input-main.vue';
+import BtnMain from '@/components/ui-components/btn-main.vue';
 
 export default {
     name: "NotaView",
-    data: () => ({ listNotas: [] }),
+    setup: () => ({ v$: useVuelidate() }),
+    data: () => ({ nameView: "Agregar", titulo: "", descripcion: "", fecha: "", errorGeneral: "" }),
     components: {
-        EmptyNotas,
-        ListaNotas,
-        BtnAction
+        BtnMain,
+        InputMain
     },
     methods: {
-        agregaNota() {
-            alert("agrega")
+        guardarNota() {
+
+        }
+    },
+    validations() {
+        return {
+            titulo: {
+                required: helpers.withMessage('El título es requerido', required)
+            },
         }
     }
 }
