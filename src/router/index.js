@@ -35,7 +35,7 @@ const routes = [
     }
   },
   {
-    path: '/nota',
+    path: '/nota/:id?',
     name: 'Nota',
     component: () => import('../views/NotaView.vue'),
     meta: {

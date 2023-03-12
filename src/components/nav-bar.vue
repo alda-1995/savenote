@@ -1,5 +1,5 @@
 <template>
-  <nav class="fixed top-0 left-0 z-50 w-full">
+  <nav class="fixed top-0 left-0 z-50 w-full bg-sky-700">
     <div class="container">
       <div class="flex items-center justify-between h-[90px]">
         <router-link to="/">
