@@ -6,6 +6,49 @@
 
 @layer base {
     html {
-        font-family: 'Inter', 'sans-serif';
+        font-family: "Inter", "sans-serif";
+    }
+    .content-g {
+        @apply pt-40 pb-20;
+    }
+    .btn-main {
+        @apply rounded-md 
+        px-8 
+        lg:px-10 
+        py-2 
+        h-[44px]
+        bg-main 
+        text-white 
+        font-btn;
+    }
+    .btn-action{
+        @apply rounded-full
+        h-[60px]
+        w-[60px]
+        flex
+        items-center
+        justify-center
+        transition-colors
+    }
+    .link-main{
+        @apply inline-flex
+        items-center
+        text-center
+        rounded-md 
+        px-8 
+        lg:px-10 
+        py-2 
+        h-[44px]
+        text-white 
+        font-btn
+    }
+    .btn-add{
+        @apply bg-add
+        hover:bg-tertiary
+    }
+
+    .btn-remove{
+        @apply bg-redme
+        hover:bg-tertiary
     }
 }

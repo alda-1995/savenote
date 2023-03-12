@@ -1,14 +1,5 @@
 <template>
-    <button :type="typeBtn" class="
-    font-inter 
-    rounded-md 
-    px-8 
-    lg:px-10 
-    py-2 
-    h-[44px]
-    bg-main 
-    text-white 
-    font-btn">
+    <button :type="typeBtn" class="btn-main">
     {{message}}
     </button>
 </template>

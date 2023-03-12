@@ -22,10 +22,11 @@ module.exports = {
         }
       },
       colors: {
-        main: "#2faeb4",
+        main: "#3F497F",
         secondary: "#0081B4",
         tertiary: "#343434",
-        redme: "#f20000"
+        redme: "#f20000",
+        add: "#2faeb4"
       }
     },
   },

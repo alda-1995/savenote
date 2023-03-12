@@ -1,7 +1,7 @@
 <template>
   <nav-bar></nav-bar>
   <side-bar></side-bar>
-  <div class="pt-28">
+  <div class="content-g">
     <router-view />
   </div>
 </template>

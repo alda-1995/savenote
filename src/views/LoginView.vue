@@ -17,7 +17,7 @@
               </div>
               <div class="flex flex-col">
                 <label for="password" class="mb-2 text-white p">Contraseña</label>
-                <input-main name="password" typeInput="text" v-model="password" placename="Contraseña"></input-main>
+                <input-main name="password" typeInput="password" v-model="password" placename="Contraseña"></input-main>
                 <div class="input-errors" v-for="error of v$.password.$errors" :key="error.$uid">
                   <div class="text-redme p-small mb-2">{{ error.$message }}</div>
                 </div>
