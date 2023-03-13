@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.shadow-logo{
+    filter: drop-shadow(0 -1px 0 white);
+}
+
 @layer base {
     html {
         font-family: "Inter", "sans-serif";

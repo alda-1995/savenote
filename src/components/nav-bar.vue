@@ -3,7 +3,7 @@
     <div class="container">
       <div class="flex items-center justify-between h-[90px]">
         <router-link to="/">
-          <img :src="require('@/assets/logo.png')" class="max-w-[60px]" alt="logo">
+          <img :src="require('@/assets/logo.png')" class="max-w-[60px] shadow-logo" alt="logo">
         </router-link>
         <div class="flex" v-if="!usuarioAutenticado">
           <link-main :url="{ name: 'login' }" background="bg-main" message="Login" class="mr-4"></link-main>
