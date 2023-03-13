@@ -5,7 +5,6 @@ import store from './store'
 import './index.css'
 import { auth } from "@/firebase";
 
-
 let app;
 auth.onAuthStateChanged(function (user) {
     if (user) {

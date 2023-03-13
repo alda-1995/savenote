@@ -1,8 +1,11 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+import { db } from '@/firebase';
+import { addDoc, collection, query, getDocs, doc, deleteDoc } from "firebase/firestore";
 
 export default createStore({
   state: {
-    usuario: null
+    usuario: null,
+    notas: []
   },
   getters: {
     usuarioAutenticado(state) {
@@ -13,6 +16,18 @@ export default createStore({
     setUsuario(state, payload) {
       state.usuario = payload;
     },
+    setFindNota(state, payload){
+      state.notaFind = payload;
+    },
+    setNotas(state, payload){
+      state.notas = payload;
+    },
+    addNota(state, payload) {
+      state.notas.push(payload);
+    },
+    removeNota(state, payload){
+      state.notas = state.notas.filter(s => s.id !== payload);
+    }
   },
   actions: {
     setUsuario({ commit }, user) {
@@ -26,6 +41,52 @@ export default createStore({
     cerrarSesion({ commit }) {
       commit('setUsuario', null);
     },
+    async obtieneNotas({commit}){
+      const queryNotas = query(collection(db, 'notas'));
+      const querySnapshot = await getDocs(queryNotas);
+      let listNotas = [];
+      querySnapshot.forEach((doc) => {
+        let dataNota = doc.data();
+        dataNota.id = doc.id;
+        listNotas.push(dataNota);
+      });
+      commit('setNotas', listNotas);
+    },
+    async agregarNota({ commit }, notaAdd) {
+      try {
+        let newDoc = {
+          titulo: notaAdd.titulo,
+          texto: notaAdd.texto
+        };
+        const resNota = await addDoc(collection(db, "notas"), newDoc);
+        newDoc.id = resNota.id;
+        commit('addNota', notaAdd);
+        return {
+          res: true,
+          error: ''
+        };
+      } catch (error) {
+        return {
+          res: false,
+          error: error
+        };
+      }
+    },
+    async eliminarNota({commit}, idNota){
+      try {
+        await deleteDoc(doc(db, "notas", idNota));
+        commit('removeNota', idNota);
+        return {
+          res: true,
+          error: ''
+        };
+      } catch (error) {
+        return{
+          res: false,
+          error: error
+        };
+      }
+    }
   },
   modules: {
   }

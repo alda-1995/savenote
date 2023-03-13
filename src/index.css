@@ -23,8 +23,8 @@
     }
     .btn-action{
         @apply rounded-full
-        h-[60px]
-        w-[60px]
+        h-[50px]
+        w-[50px]
         flex
         items-center
         justify-center

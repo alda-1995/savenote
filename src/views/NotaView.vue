@@ -14,13 +14,14 @@
                     </div>
                     <div class="flex flex-col" :class="{ error: v$.texto.$errors.length }">
                         <label for="texto" class="mb-2 text-main p">Texto</label>
-                        <TextAreaMain name="texto" v-model="texto"
-                            placename="Escribe un texto"></TextAreaMain>
+                        <TextAreaMain name="texto" v-model="texto" placename="Escribe un texto"></TextAreaMain>
                         <div class="input-errors" v-for="error of v$.texto.$errors" :key="error.$uid">
                             <div class="text-redme p-small mb-2">{{ error.$message }}</div>
                         </div>
                     </div>
-                    <btn-main typeBtn="submit" message="Guardar"></btn-main>
+                    <btn-main class="mt-2" typeBtn="submit" message="Guardar"></btn-main>
+                    <link-main :url="{ name: 'Notas' }" background="bg-secondary" message="Regresar"
+                        class="ml-4"></link-main>
                     <p class="text-redme mt-4" v-if="this.errorGeneral">{{ errorGeneral }}</p>
                 </form>
             </div>
@@ -33,19 +34,72 @@ import { required, helpers } from '@vuelidate/validators';
 import InputMain from '@/components/ui-components/input-main.vue';
 import BtnMain from '@/components/ui-components/btn-main.vue';
 import TextAreaMain from '@/components/ui-components/textarea-main.vue';
+import LinkMain from '@/components/ui-components/link-main.vue'
+import { mapActions, mapState } from 'vuex';
+import { db } from '@/firebase';
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 
 export default {
     name: "NotaView",
     setup: () => ({ v$: useVuelidate() }),
-    data: () => ({ nameView: "Agregar", titulo: "", texto: "", fecha: "", errorGeneral: "" }),
+    data: () => ({ nameView: "Agregar", id: 'asd', titulo: "", texto: "", fecha: "", errorGeneral: "" }),
     components: {
         BtnMain,
         InputMain,
-        TextAreaMain
+        TextAreaMain,
+        LinkMain
+    },
+    computed: {
+        ...mapState(['notas'])
+    },
+    mounted() {
+        if (this.$route.params.id != '')
+            this.findNota();
     },
     methods: {
-        guardarNota() {
-
+        ...mapActions(['agregarNota']),
+        async guardarNota() {
+            const result = await this.v$.$validate()
+            if (!result)
+                return;
+            this.errorGeneral = "";
+            if (this.$route.params.id == "") {
+                this.crearNota();
+            } else {
+                this.actualizarNota();
+            }
+        },
+        async crearNota() {
+            const result = await this.agregarNota({ titulo: this.titulo, texto: this.texto });
+            if (result.res) {
+                this.$router.push('notas');
+            } else {
+                this.errorGeneral = result.error;
+            }
+        },
+        async findNota() {
+            const docRef = doc(db, 'notas', this.$route.params.id);
+            const docSnap = await getDoc(docRef);
+            if(docSnap.exists()){
+                const { titulo, texto } = docSnap.data();
+                this.id = this.$route.params.id;
+                this.titulo = titulo;
+                this.texto = texto;
+            }else{
+                this.errorGeneral = "Error al obtener la nota";
+            }
+        },
+        async actualizarNota() {
+            try {
+                const notaRef = doc(db, "notas", this.id);
+                await updateDoc(notaRef, {
+                    titulo: this.titulo,
+                    texto: this.texto
+                });
+                this.$router.go(-1);
+            } catch (error) {
+                this.errorGeneral = error;
+            }
         }
     },
     validations() {
