@@ -15,6 +15,7 @@
     "firebase": "^9.17.2",
     "gsap": "npm:@gsap/business@^3.11.4",
     "vue": "^3.2.13",
+    "vue-loading-overlay": "^6.0.3",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },

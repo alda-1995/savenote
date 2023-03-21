@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import './index.css'
 import { auth } from "@/firebase";
+import {LoadingPlugin} from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 let app;
 auth.onAuthStateChanged(function (user) {
@@ -11,6 +13,6 @@ auth.onAuthStateChanged(function (user) {
         store.dispatch('setUsuario', user);
     }
     if (!app) {
-        app = createApp(App).use(store).use(router).mount('#app')
+        app = createApp(App).use(store).use(LoadingPlugin).use(router).mount('#app')
     }
 });

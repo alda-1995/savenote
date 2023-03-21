@@ -25,7 +25,8 @@
                                 </div>
                             </div>
                             <div class="flex flex-col">
-                                <label for="confirmPassword" class="mb-2 text-main  md:text-white p">Confirmar Contraseña</label>
+                                <label for="confirmPassword" class="mb-2 text-main  md:text-white p">Confirmar
+                                    Contraseña</label>
                                 <input-main name="confirmPassword" typeInput="text" v-model="confirmPassword"
                                     placename="Introduce nuevamente tu contraseña"></input-main>
                                 <div class="input-errors" v-for="error of v$.confirmPassword.$errors" :key="error.$uid">
@@ -34,7 +35,8 @@
                             </div>
                             <btn-main typeBtn="submit" message="Entrar"></btn-main>
                             <p class="text-redme mt-4" v-if="this.errorGeneral">{{ errorGeneral }}</p>
-                            <router-link to="/login" class="block mt-3 text-secondary md:text-white">Si ya estas registrado, click aqui!</router-link>
+                            <router-link to="/login" class="block mt-3 text-secondary md:text-white">Si ya estas registrado,
+                                click aqui!</router-link>
                         </div>
                     </form>
                 </div>
@@ -65,6 +67,10 @@ export default {
             const result = await this.v$.$validate()
             if (!result)
                 return
+            let loader = this.$loading.show({
+                canCancel: false,
+                color: '#0081B4'
+            });
             this.errorGeneral = "";
             try {
                 const resultRegister = await createUserWithEmailAndPassword(auth, this.correo, this.password);
@@ -73,6 +79,7 @@ export default {
             } catch (error) {
                 this.errorGeneral = error;
             }
+            loader.hide();
         }
     },
     validations() {

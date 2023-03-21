@@ -24,7 +24,8 @@
               </div>
               <btn-main typeBtn="submit" message="Entrar"></btn-main>
               <p class="text-redme mt-4" v-if="this.errorGeneral">{{ errorGeneral }}</p>
-              <router-link to="/registro" class="block mt-3 text-secondary md:text-white">Si aun no estas registrado, click aqui!</router-link>
+              <router-link to="/registro" class="block mt-3 text-secondary md:text-white">Si aun no estas registrado,
+                click aqui!</router-link>
             </div>
           </form>
         </div>
@@ -56,6 +57,10 @@ export default {
       const result = await this.v$.$validate()
       if (!result)
         return;
+      let loader = this.$loading.show({
+        canCancel: false,
+        color: '#0081B4'
+      });
       this.errorGeneral = "";
       try {
         const { user } = await signInWithEmailAndPassword(auth, this.correo, this.password);
@@ -65,6 +70,7 @@ export default {
         const errorMessage = error.message;
         this.errorGeneral = errorMessage;
       }
+      loader.hide();
     }
   },
   validations() {

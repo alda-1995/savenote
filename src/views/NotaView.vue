@@ -62,34 +62,53 @@ export default {
             const result = await this.v$.$validate()
             if (!result)
                 return;
+            let loader = this.$loading.show({
+                canCancel: false,
+                color: '#0081B4'
+            });
             this.errorGeneral = "";
             if (this.$route.params.id == "") {
                 this.crearNota();
             } else {
                 this.actualizarNota();
             }
+            loader.hide();
         },
         async crearNota() {
+            let loader = this.$loading.show({
+                canCancel: false,
+                color: '#0081B4'
+            });
             const result = await this.agregarNota({ titulo: this.titulo, texto: this.texto });
             if (result.res) {
                 this.$router.push('notas');
             } else {
                 this.errorGeneral = result.error;
             }
+            loader.hide();
         },
         async findNota() {
+            let loader = this.$loading.show({
+                canCancel: false,
+                color: '#0081B4'
+            });
             const docRef = doc(db, 'notas', this.$route.params.id);
             const docSnap = await getDoc(docRef);
-            if(docSnap.exists()){
+            if (docSnap.exists()) {
                 const { titulo, texto } = docSnap.data();
                 this.id = this.$route.params.id;
                 this.titulo = titulo;
                 this.texto = texto;
-            }else{
+            } else {
                 this.errorGeneral = "Error al obtener la nota";
             }
+            loader.hide();
         },
         async actualizarNota() {
+            let loader = this.$loading.show({
+                canCancel: false,
+                color: '#0081B4'
+            });
             try {
                 const notaRef = doc(db, "notas", this.id);
                 await updateDoc(notaRef, {
@@ -100,6 +119,7 @@ export default {
             } catch (error) {
                 this.errorGeneral = error;
             }
+            loader.hide();
         }
     },
     validations() {

@@ -7,7 +7,7 @@
                 </div>
                 {{ infoItem.titulo }}
             </h4>
-            <router-link :to="{name: 'Nota', params: { id: infoItem.id }}"
+            <router-link :to="{ name: 'Nota', params: { id: infoItem.id } }"
                 class="flex items-center justify-center absolute top-0 left-0 h-full w-full bg-main transition-all opacity-0 group-hover:opacity-100">
                 <EyeIcon class="text-white h-8 w-8"></EyeIcon>
             </router-link>
@@ -28,19 +28,24 @@ export default {
         BookOpenIcon,
         BtnAction
     },
-    props:{
-        infoItem:{
+    props: {
+        infoItem: {
             type: Object,
             required: true
         }
     },
-    methods:{
+    methods: {
         ...mapActions(['eliminarNota']),
-        async deleteNota(id){
+        async deleteNota(id) {
+            let loader = this.$loading.show({
+                canCancel: false,
+                color: '#0081B4'
+            });
             const { res } = await this.eliminarNota(id);
-            if(!res){
+            if (!res) {
                 alert("Error al eliminar");
             }
+            loader.hide();
         }
     }
 }

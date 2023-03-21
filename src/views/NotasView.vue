@@ -19,10 +19,10 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
     name: "NotaView",
-    created(){
+    created() {
         this.obtieneNotasInit();
     },
-    computed:{
+    computed: {
         ...mapState(['notas'])
     },
     components: {
@@ -35,8 +35,13 @@ export default {
         agregaNota() {
             this.$router.push('nota');
         },
-        async obtieneNotasInit(){
+        async obtieneNotasInit() {
+            let loader = this.$loading.show({
+                canCancel: false,
+                color: '#0081B4'
+            });
             await this.obtieneNotas();
+            loader.hide();
         }
     }
 }
