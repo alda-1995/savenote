@@ -1,22 +1,22 @@
 <template>
   <div class="container">
-    <div class="min-h-screen flex py-16">
-      <div class="grid md:grid-cols-2 md:gap-4">
+    <div class="md:min-h-[500px] flex md:py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4">
         <div class="flex flex-col">
-          <h1 class="text-tertiary">Guarda tus notas personales aquí.</h1>
+          <h1 class="text-tertiary mb-8 md:mb-0">Accesa a tus notas personales aquí.</h1>
         </div>
         <div class="flex flex-col">
-          <form class="w-full md:pl-24" @submit.prevent="ingresarUsuario()" novalidate>
-            <div class="p-12 bg-tertiary rounded-md">
+          <form class="w-full lg:pl-24" @submit.prevent="ingresarUsuario()" novalidate>
+            <div class="md:p-12 md:bg-secondary rounded-md">
               <div class="flex flex-col" :class="{ error: v$.correo.$errors.length }">
-                <label for="correo" class="mb-2 text-white p">Correo electronico</label>
+                <label for="correo" class="mb-2 text-main  md:text-white p">Correo electronico</label>
                 <input-main name="correo" typeInput="email" v-model="correo" placename="Correo electronico"></input-main>
                 <div class="input-errors" v-for="error of v$.correo.$errors" :key="error.$uid">
                   <div class="text-redme p-small mb-2">{{ error.$message }}</div>
                 </div>
               </div>
               <div class="flex flex-col">
-                <label for="password" class="mb-2 text-white p">Contraseña</label>
+                <label for="password" class="mb-2 text-main md:text-white p">Contraseña</label>
                 <input-main name="password" typeInput="password" v-model="password" placename="Contraseña"></input-main>
                 <div class="input-errors" v-for="error of v$.password.$errors" :key="error.$uid">
                   <div class="text-redme p-small mb-2">{{ error.$message }}</div>
@@ -24,6 +24,7 @@
               </div>
               <btn-main typeBtn="submit" message="Entrar"></btn-main>
               <p class="text-redme mt-4" v-if="this.errorGeneral">{{ errorGeneral }}</p>
+              <router-link to="/registro" class="block mt-3 text-secondary md:text-white">Si aun no estas registrado, click aqui!</router-link>
             </div>
           </form>
         </div>
@@ -59,7 +60,7 @@ export default {
       try {
         const { user } = await signInWithEmailAndPassword(auth, this.correo, this.password);
         this.setUsuario(user);
-        this.$router.push('perfil');
+        this.$router.push('notas');
       } catch (error) {
         const errorMessage = error.message;
         this.errorGeneral = errorMessage;

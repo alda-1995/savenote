@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center">
+    <div class="flex flex-col md:flex-row md:items-center mb-3">
         <div class="flex-1 group border-secondary border-2 border-solid p-6 transition-all relative text-tertiary">
             <h4 class="flex items-center group-hover:opacity-0 transition-all" v-if="infoItem.titulo">
                 <div class="mr-4">
@@ -12,7 +12,7 @@
                 <EyeIcon class="text-white h-8 w-8"></EyeIcon>
             </router-link>
         </div>
-        <div class="shrink-0 ml-2">
+        <div class="mt-2 md:mt-0 md:shrink-0 md:ml-2 flex md:block justify-center">
             <btn-action background="btn-remove" type-icon="remove" v-on:my-accion="deleteNota(infoItem.id)"></btn-action>
         </div>
     </div>

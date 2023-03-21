@@ -7,13 +7,13 @@
         <div class="p-2.5 mt-1 flex items-center">
             <h4 class="font-bold text-white">MENU</h4>
         </div>
-        <div class="my-2 bg-white h-[1px]"></div>
-        <router-link to="/perfil" class="p-2.5 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-main text-white">
+        <!-- <div class="my-2 bg-white h-[1px]"></div> -->
+        <!-- <router-link to="/perfil" class="p-2.5 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-main text-white">
             <IdentificationIcon class="h-8 w-8 text-white" />
             <div class="flex justify-between w-full items-center">
                 <span class="h5 ml-4">Perfil</span>
             </div>
-        </router-link>
+        </router-link> -->
         <div class="my-2 bg-white h-[1px]"></div>
         <router-link to="/notas" class="p-2.5 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-main text-white">
             <PencilIcon class="h-8 w-8 text-white" />
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { XMarkIcon, IdentificationIcon, ArrowLeftOnRectangleIcon, PencilIcon } from '@heroicons/vue/24/solid';
+import { XMarkIcon, ArrowLeftOnRectangleIcon, PencilIcon } from '@heroicons/vue/24/solid';
 import { gsap } from 'gsap';
 import { mapActions } from 'vuex';
 import { auth } from "@/firebase";
@@ -42,7 +42,7 @@ export default {
     name: "SideBar",
     components: {
         XMarkIcon,
-        IdentificationIcon,
+        // IdentificationIcon,
         ArrowLeftOnRectangleIcon,
         PencilIcon
     },

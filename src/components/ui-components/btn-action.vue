@@ -6,11 +6,14 @@
         <div v-if="typeIcon == 'remove'">
             <TrashIcon class="text-white h-5 w-5"></TrashIcon>
         </div>
+        <div v-if="typeIcon == 'user'">
+            <UserIcon class="text-white h-5 w-5"></UserIcon>
+        </div>
     </button>
 </template>
 <script>
 
-import { PlusIcon, TrashIcon } from '@heroicons/vue/24/solid';
+import { PlusIcon, TrashIcon, UserIcon } from '@heroicons/vue/24/solid';
 
 export default {
     name: "BtnAction",
@@ -26,11 +29,12 @@ export default {
     },
     components:{
         PlusIcon,
-        TrashIcon
+        TrashIcon,
+        UserIcon
     },
     methods: {
         accionButton() {
-            this.$emit('myAccion')
+            this.$emit('myAccion');
         }
     }
 }

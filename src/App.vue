@@ -1,7 +1,7 @@
 <template>
   <nav-bar></nav-bar>
   <side-bar></side-bar>
-  <div class="content-g">
+  <div :class="[$route.name !== 'home' ? 'content-g' : '']">
     <router-view />
   </div>
 </template>
