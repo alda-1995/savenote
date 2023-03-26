@@ -76,7 +76,7 @@ export default {
             try {
                 const resultRegister = await createUserWithEmailAndPassword(auth, this.correo, this.password);
                 this.setUsuario(resultRegister.user);
-                this.$router.push('perfil');
+                this.$router.push('notas');
             } catch (error) {
                 const errorMessage = getError(error); 
                 this.errorGeneral = errorMessage;
