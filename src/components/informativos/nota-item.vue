@@ -21,6 +21,7 @@
 import BtnAction from '@/components/ui-components/btn-action.vue';
 import { EyeIcon, BookOpenIcon } from '@heroicons/vue/24/solid';
 import { mapActions } from 'vuex';
+
 export default {
     name: "NotaItem",
     components: {
@@ -43,7 +44,12 @@ export default {
             });
             const { res } = await this.eliminarNota(id);
             if (!res) {
-                alert("Error al eliminar");
+                this.$swal.fire({
+                    title: 'Error!',
+                    text: 'Error al eliminar',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
             }
             loader.hide();
         }

@@ -38,6 +38,7 @@ import LinkMain from '@/components/ui-components/link-main.vue'
 import { mapActions, mapState } from 'vuex';
 import { db } from '@/firebase';
 import { doc, updateDoc, getDoc } from "firebase/firestore";
+import getError from '@/functions/ManageErrors';
 
 export default {
     name: "NotaView",
@@ -83,7 +84,14 @@ export default {
             if (result.res) {
                 this.$router.push('notas');
             } else {
-                this.errorGeneral = result.error;
+                const errorMessage = getError(result.error);
+                this.errorGeneral = errorMessage;
+                this.$swal.fire({
+                    title: 'Error!',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
             }
             loader.hide();
         },
@@ -100,7 +108,14 @@ export default {
                 this.titulo = titulo;
                 this.texto = texto;
             } else {
-                this.errorGeneral = "Error al obtener la nota";
+                const errorMessage = getError("");
+                this.errorGeneral = errorMessage;
+                this.$swal.fire({
+                    title: 'Error!',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
             }
             loader.hide();
         },
@@ -117,7 +132,14 @@ export default {
                 });
                 this.$router.go(-1);
             } catch (error) {
-                this.errorGeneral = error;
+                const errorMessage = getError(error);
+                this.errorGeneral = errorMessage;
+                this.$swal.fire({
+                    title: 'Error!',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
             }
             loader.hide();
         }

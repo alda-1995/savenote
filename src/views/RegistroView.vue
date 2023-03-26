@@ -27,7 +27,7 @@
                             <div class="flex flex-col">
                                 <label for="confirmPassword" class="mb-2 text-main  md:text-white p">Confirmar
                                     Contraseña</label>
-                                <input-main name="confirmPassword" typeInput="text" v-model="confirmPassword"
+                                <input-main name="confirmPassword" typeInput="password" v-model="confirmPassword"
                                     placename="Introduce nuevamente tu contraseña"></input-main>
                                 <div class="input-errors" v-for="error of v$.confirmPassword.$errors" :key="error.$uid">
                                     <div class="text-redme p-small mb-2">{{ error.$message }}</div>
@@ -47,11 +47,12 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { mapActions } from "vuex";
-import { required, email, helpers, minLength, sameAs } from '@vuelidate/validators'
+import { required, email, helpers, sameAs, minLength } from '@vuelidate/validators'
 import InputMain from '@/components/ui-components/input-main.vue'
 import BtnMain from '@/components/ui-components/btn-main.vue'
 import { auth } from "@/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import getError from '@/functions/ManageErrors';
 
 export default {
     name: 'RegistroView',
@@ -77,7 +78,8 @@ export default {
                 this.setUsuario(resultRegister.user);
                 this.$router.push('perfil');
             } catch (error) {
-                this.errorGeneral = error;
+                const errorMessage = getError(error); 
+                this.errorGeneral = errorMessage;
             }
             loader.hide();
         }

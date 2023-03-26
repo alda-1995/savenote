@@ -16,16 +16,16 @@ export default createStore({
     setUsuario(state, payload) {
       state.usuario = payload;
     },
-    setFindNota(state, payload){
+    setFindNota(state, payload) {
       state.notaFind = payload;
     },
-    setNotas(state, payload){
+    setNotas(state, payload) {
       state.notas = payload;
     },
     addNota(state, payload) {
       state.notas.push(payload);
     },
-    removeNota(state, payload){
+    removeNota(state, payload) {
       state.notas = state.notas.filter(s => s.id !== payload);
     }
   },
@@ -41,16 +41,27 @@ export default createStore({
     cerrarSesion({ commit }) {
       commit('setUsuario', null);
     },
-    async obtieneNotas({commit}){
-      const queryNotas = query(collection(db, 'notas'));
-      const querySnapshot = await getDocs(queryNotas);
-      let listNotas = [];
-      querySnapshot.forEach((doc) => {
-        let dataNota = doc.data();
-        dataNota.id = doc.id;
-        listNotas.push(dataNota);
-      });
-      commit('setNotas', listNotas);
+    async obtieneNotas({ commit }) {
+      try {
+        const queryNotas = query(collection(db, 'notas'));
+        const querySnapshot = await getDocs(queryNotas);
+        let listNotas = [];
+        querySnapshot.forEach((doc) => {
+          let dataNota = doc.data();
+          dataNota.id = doc.id;
+          listNotas.push(dataNota);
+        });
+        commit('setNotas', listNotas);
+        return {
+          res: true,
+          error: ''
+        };
+      } catch (error) {
+        return {
+          res: false,
+          error: error
+        };
+      }
     },
     async agregarNota({ commit }, notaAdd) {
       try {
@@ -72,7 +83,7 @@ export default createStore({
         };
       }
     },
-    async eliminarNota({commit}, idNota){
+    async eliminarNota({ commit }, idNota) {
       try {
         await deleteDoc(doc(db, "notas", idNota));
         commit('removeNota', idNota);
@@ -81,7 +92,7 @@ export default createStore({
           error: ''
         };
       } catch (error) {
-        return{
+        return {
           res: false,
           error: error
         };

@@ -42,6 +42,7 @@ import { required, email, helpers } from '@vuelidate/validators';
 import { auth } from "@/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { mapActions } from 'vuex';
+import getError from '@/functions/ManageErrors';
 
 export default {
   name: 'LoginView',
@@ -67,8 +68,14 @@ export default {
         this.setUsuario(user);
         this.$router.push('notas');
       } catch (error) {
-        const errorMessage = error.message;
+        const errorMessage = getError(error); 
         this.errorGeneral = errorMessage;
+        this.$swal.fire({
+          title: 'Error!',
+          text: errorMessage,
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
       loader.hide();
     }

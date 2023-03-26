@@ -16,6 +16,7 @@ import EmptyNotas from '@/components/informativos/empty-notas.vue';
 import ListaNotas from '@/components/informativos/lista-notas.vue';
 import BtnAction from '@/components/ui-components/btn-action.vue';
 import { mapActions, mapState } from 'vuex';
+import getError from '@/functions/ManageErrors';
 
 export default {
     name: "NotaView",
@@ -40,7 +41,16 @@ export default {
                 canCancel: false,
                 color: '#0081B4'
             });
-            await this.obtieneNotas();
+            const result = await this.obtieneNotas();
+            if(!result.res){
+                const errorMessage = getError(result.error);
+                this.$swal.fire({
+                    title: 'Error!',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
             loader.hide();
         }
     }
