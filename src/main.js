@@ -13,6 +13,7 @@ let app;
 auth.onAuthStateChanged(function (user) {
     if (user) {
         store.dispatch('setUsuario', user);
+        console.log(user);
     }
     if (!app) {
         app = createApp(App).use(store).use(LoadingPlugin).use(VueSweetalert2).use(router).mount('#app')

@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 import { db } from '@/firebase';
-import { addDoc, collection, query, getDocs, doc, deleteDoc } from "firebase/firestore";
+import { addDoc, collection, query, getDocs, doc, deleteDoc, where } from "firebase/firestore";
 
 export default createStore({
   state: {
@@ -41,9 +41,9 @@ export default createStore({
     cerrarSesion({ commit }) {
       commit('setUsuario', null);
     },
-    async obtieneNotas({ commit }) {
+    async obtieneNotas({ commit, state }) {
       try {
-        const queryNotas = query(collection(db, 'notas'));
+        const queryNotas = query(collection(db, 'notas'), where("uid", "==", state.usuario.uid));
         const querySnapshot = await getDocs(queryNotas);
         let listNotas = [];
         querySnapshot.forEach((doc) => {
@@ -63,11 +63,12 @@ export default createStore({
         };
       }
     },
-    async agregarNota({ commit }, notaAdd) {
+    async agregarNota({ commit, state }, notaAdd) {
       try {
         let newDoc = {
           titulo: notaAdd.titulo,
-          texto: notaAdd.texto
+          texto: notaAdd.texto,
+          uid: state.usuario.uid
         };
         const resNota = await addDoc(collection(db, "notas"), newDoc);
         newDoc.id = resNota.id;
